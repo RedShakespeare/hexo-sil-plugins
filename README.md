@@ -22,6 +22,9 @@ npm run pack:dry-run
 
 ## Independent releases
 
+The complete bootstrap, release, OIDC migration, and recovery procedure is in
+[`docs/npm-release.md`](docs/npm-release.md).
+
 Every workspace owns its version and Git tag. A published GitHub Release triggers
 `.github/workflows/publish.yml` and publishes exactly the package named by its
 tag. Tags must use this format:
