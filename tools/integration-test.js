@@ -4,6 +4,7 @@ const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+const { parsePackResult } = require('./npm-pack-result');
 
 const root = path.resolve(__dirname, '..');
 const site = process.env.HEXO_SIL_SITE;
@@ -18,7 +19,7 @@ try {
   const packed = [];
   for (const name of fs.readdirSync(path.join(root, 'packages')).sort()) {
     const cwd = path.join(root, 'packages', name);
-    const result = JSON.parse(execFileSync('npm', ['pack', '--pack-destination', packs, '--json'], { cwd, encoding: 'utf8' }))[0];
+    const result = parsePackResult(execFileSync('npm', ['pack', '--pack-destination', packs, '--json'], { cwd, encoding: 'utf8' }), name);
     packed.push({ name: result.name, file: path.join(packs, result.filename) });
   }
   fs.cpSync(site, fixture, {

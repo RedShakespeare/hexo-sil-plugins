@@ -4,6 +4,7 @@ const assert = require('node:assert/strict');
 const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
+const { parsePackResult } = require('./npm-pack-result');
 
 const root = path.resolve(__dirname, '..');
 const packages = fs.readdirSync(path.join(root, 'packages')).sort();
@@ -11,7 +12,7 @@ const packages = fs.readdirSync(path.join(root, 'packages')).sort();
 for (const name of packages) {
   const cwd = path.join(root, 'packages', name);
   const output = execFileSync('npm', ['pack', '--dry-run', '--json'], { cwd, encoding: 'utf8' });
-  const result = JSON.parse(output)[0];
+  const result = parsePackResult(output, name);
   const files = result.files.map(file => file.path);
   assert(files.includes('package.json'), `${name} package.json is missing`);
   assert(files.includes('README.md'), `${name} README.md is missing`);

@@ -12,6 +12,7 @@ const {
   releaseInfo,
   writeOutputs
 } = require('../tools/release');
+const { parsePackResult } = require('../tools/npm-pack-result');
 
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'hexo-sil-release-'));
@@ -73,4 +74,11 @@ test('GitHub outputs use fixed release field names', t => {
   assert.match(source, /^package=hexo-sil-audio$/m);
   assert.match(source, /^dist_tag=latest$/m);
   assert.match(source, /^prerelease=false$/m);
+});
+
+test('pack metadata accepts npm 10 arrays and npm 12 package maps', () => {
+  const metadata = { name: 'hexo-sil-audio', files: [{ path: 'package.json' }] };
+  assert.deepEqual(parsePackResult(JSON.stringify([metadata]), metadata.name), metadata);
+  assert.deepEqual(parsePackResult(JSON.stringify({ [metadata.name]: metadata }), metadata.name), metadata);
+  assert.throws(() => parsePackResult('{}', metadata.name), /did not return metadata/);
 });
