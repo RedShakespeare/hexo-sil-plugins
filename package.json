@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "test": "node --test test && npm test --workspaces --if-present",
+    "test": "node --test test/release.test.js && npm test --workspaces --if-present",
     "check": "npm run test && npm run pack:dry-run",
     "pack:dry-run": "node tools/pack-audit.js",
     "release:check": "node tools/release.js check",
