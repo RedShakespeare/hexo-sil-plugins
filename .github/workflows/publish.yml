@@ -1,0 +1,81 @@
+name: Publish npm package
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-${{ github.event.release.tag_name }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+
+      - name: Verify release commit
+        run: |
+          git fetch origin main:refs/remotes/origin/main
+          git merge-base --is-ancestor HEAD origin/main
+
+      - name: Resolve package release
+        id: release
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: node tools/release.js check "$RELEASE_TAG"
+
+      - name: Verify prerelease metadata
+        env:
+          RELEASE_IS_PRERELEASE: ${{ github.event.release.prerelease }}
+          VERSION_IS_PRERELEASE: ${{ steps.release.outputs.prerelease }}
+        run: |
+          test "$RELEASE_IS_PRERELEASE" = "$VERSION_IS_PRERELEASE"
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - run: npm install --global npm@12.0.1
+      - run: npm ci
+      - run: npm run check
+
+      - name: Ensure version is unpublished
+        env:
+          PACKAGE_NAME: ${{ steps.release.outputs.package }}
+          PACKAGE_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version --json > /tmp/npm-version 2> /tmp/npm-error; then
+            echo "$PACKAGE_NAME@$PACKAGE_VERSION is already published." >&2
+            exit 1
+          fi
+          if ! grep -q 'E404' /tmp/npm-error; then
+            cat /tmp/npm-error >&2
+            exit 1
+          fi
+
+      - name: Publish selected workspace
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PACKAGE_NAME: ${{ steps.release.outputs.package }}
+          DIST_TAG: ${{ steps.release.outputs.dist_tag }}
+        run: npm publish --workspace "$PACKAGE_NAME" --access public --provenance --tag "$DIST_TAG"
+
+      - name: Record release summary
+        env:
+          PACKAGE_NAME: ${{ steps.release.outputs.package }}
+          PACKAGE_VERSION: ${{ steps.release.outputs.version }}
+          DIST_TAG: ${{ steps.release.outputs.dist_tag }}
+        run: |
+          echo "### npm publish" >> "$GITHUB_STEP_SUMMARY"
+          echo "Published \`$PACKAGE_NAME@$PACKAGE_VERSION\` with dist-tag \`$DIST_TAG\`." >> "$GITHUB_STEP_SUMMARY"
