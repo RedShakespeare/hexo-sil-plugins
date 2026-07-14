@@ -5,7 +5,7 @@
   "main": "index.js",
   "exports": { ".": "./index.js", "./package.json": "./package.json" },
   "files": ["skins/", "index.js", "README.md", "LICENSE"],
-  "scripts": { "test": "node --test test", "prepublishOnly": "npm test" },
+  "scripts": { "test": "node --test test/audio.test.js", "prepublishOnly": "npm test" },
   "repository": { "type": "git", "url": "git+https://github.com/RedShakespeare/hexo-sil-plugins.git", "directory": "packages/hexo-sil-audio" },
   "homepage": "https://github.com/RedShakespeare/hexo-sil-plugins#readme",
   "bugs": "https://github.com/RedShakespeare/hexo-sil-plugins/issues",

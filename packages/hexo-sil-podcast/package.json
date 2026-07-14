@@ -6,7 +6,7 @@
   "exports": { ".": "./index.js", "./rss": "./lib/rss.js", "./verify": "./lib/verify.js", "./package.json": "./package.json" },
   "bin": { "hexo-sil-podcast-verify": "bin/verify.js" },
   "files": ["bin/", "lib/", "index.js", "README.md", "LICENSE"],
-  "scripts": { "test": "node --test test", "prepublishOnly": "npm test" },
+  "scripts": { "test": "node --test test/hexo-sil-podcast.test.js test/verify-podcast-feed.test.js", "prepublishOnly": "npm test" },
   "repository": { "type": "git", "url": "git+https://github.com/RedShakespeare/hexo-sil-plugins.git", "directory": "packages/hexo-sil-podcast" },
   "homepage": "https://github.com/RedShakespeare/hexo-sil-plugins#readme",
   "bugs": "https://github.com/RedShakespeare/hexo-sil-plugins/issues",

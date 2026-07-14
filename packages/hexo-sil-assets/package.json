@@ -16,7 +16,7 @@
   },
   "files": ["bin/", "lib/", "index.js", "README.md", "LICENSE"],
   "scripts": {
-    "test": "node --test test",
+    "test": "node --test test/assets.test.js test/hexo-sil-assets-sync.test.js",
     "prepublishOnly": "npm test"
   },
   "repository": {
