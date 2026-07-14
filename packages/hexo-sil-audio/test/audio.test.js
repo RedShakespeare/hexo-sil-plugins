@@ -140,6 +140,21 @@ test('enabled integration safely falls back to legacy local files when the capab
   assert.equal(warnings, 1);
 });
 
+test('audio accepts video-classified legacy container MIME entries', async () => {
+  const containerRuntime = {
+    ...runtime,
+    assetCapability: {
+      getObject(key) {
+        if (key === 'files/audio/track.mp4') return { size: 10, type: 'video/mp4', duration: '00:01' };
+        if (key === 'files/audio/track.webm') return { size: 10, type: 'video/webm', duration: '00:01' };
+        return null;
+      }
+    }
+  };
+  assert.equal((await normaliseAudio(post(), { file: 'audio/track.mp4' }, containerRuntime)).type, 'audio/mp4');
+  assert.equal((await normaliseAudio(post(), { file: 'audio/track.webm' }, containerRuntime)).type, 'audio/webm');
+});
+
 test('an installed but broken manifest capability fails instead of falling back', async () => {
   await assert.rejects(normaliseAudio(post(), { file: fixtureFile }, {
     ...runtime,

@@ -25,18 +25,21 @@ let WORKSPACE_PATH = path.join(REPOSITORY_ROOT, ASSET_CONFIG.workspace);
 let GITIGNORE_PATH = path.join(REPOSITORY_ROOT, '.gitignore');
 let R2_ASSET_IGNORE_RULES = ASSET_CONFIG.managed.map(entry => entry.ignore).filter(Boolean);
 const AUDIO_EXTENSIONS = new Map([
-  ['.mp3', 'audio/mpeg'], ['.m4a', 'audio/mp4'], ['.m4b', 'audio/mp4'], ['.mp4', 'audio/mp4'],
+  ['.mp3', 'audio/mpeg'], ['.m4a', 'audio/mp4'], ['.m4b', 'audio/mp4'],
   ['.aac', 'audio/aac'], ['.ogg', 'audio/ogg'], ['.opus', 'audio/opus'], ['.wav', 'audio/wav'],
-  ['.wave', 'audio/wav'], ['.flac', 'audio/flac'], ['.aif', 'audio/aiff'], ['.aiff', 'audio/aiff'], ['.webm', 'audio/webm']
+  ['.wave', 'audio/wav'], ['.flac', 'audio/flac'], ['.aif', 'audio/aiff'], ['.aiff', 'audio/aiff'], ['.weba', 'audio/webm']
 ]);
 const MIME_TYPES = new Map([
   ...AUDIO_EXTENSIONS,
+  ['.ass', 'text/x-ssa; charset=utf-8'],
   ['.7z', 'application/x-7z-compressed'], ['.apk', 'application/vnd.android.package-archive'], ['.css', 'text/css; charset=utf-8'],
   ['.gif', 'image/gif'], ['.htm', 'text/html; charset=utf-8'], ['.html', 'text/html; charset=utf-8'], ['.jpg', 'image/jpeg'],
   ['.jpeg', 'image/jpeg'], ['.js', 'text/javascript; charset=utf-8'], ['.json', 'application/json; charset=utf-8'], ['.mjs', 'text/javascript; charset=utf-8'],
-  ['.pdf', 'application/pdf'], ['.png', 'image/png'], ['.svg', 'image/svg+xml'], ['.tar', 'application/x-tar'], ['.tgz', 'application/gzip'],
+  ['.m4v', 'video/mp4'], ['.mp4', 'video/mp4'], ['.otf', 'font/otf'], ['.pdf', 'application/pdf'], ['.png', 'image/png'],
+  ['.srt', 'application/x-subrip; charset=utf-8'], ['.svg', 'image/svg+xml'], ['.tar', 'application/x-tar'], ['.tgz', 'application/gzip'],
   ['.txt', 'text/plain; charset=utf-8'], ['.wasm', 'application/wasm'], ['.wav', 'audio/wav'], ['.webp', 'image/webp'], ['.woff', 'font/woff'],
-  ['.woff2', 'font/woff2'], ['.zip', 'application/zip'], ['.bz2', 'application/x-bzip2'], ['.gz', 'application/gzip']
+  ['.woff2', 'font/woff2'], ['.ttf', 'font/ttf'], ['.webm', 'video/webm'], ['.zip', 'application/zip'],
+  ['.bz2', 'application/x-bzip2'], ['.gz', 'application/gzip']
 ]);
 
 function assetError(message) {

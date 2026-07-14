@@ -9,7 +9,12 @@ const DURATION_PATTERN = /^(?:\d{1,3}:)?[0-5]\d:[0-5]\d$/;
 const AUDIO_MIME_TYPES = new Map([
   ['.mp3', 'audio/mpeg'], ['.m4a', 'audio/mp4'], ['.m4b', 'audio/mp4'], ['.mp4', 'audio/mp4'],
   ['.aac', 'audio/aac'], ['.ogg', 'audio/ogg'], ['.opus', 'audio/opus'], ['.wav', 'audio/wav'],
-  ['.wave', 'audio/wav'], ['.flac', 'audio/flac'], ['.aif', 'audio/aiff'], ['.aiff', 'audio/aiff'], ['.webm', 'audio/webm']
+  ['.wave', 'audio/wav'], ['.flac', 'audio/flac'], ['.aif', 'audio/aiff'], ['.aiff', 'audio/aiff'],
+  ['.weba', 'audio/webm'], ['.webm', 'audio/webm']
+]);
+const LEGACY_CONTAINER_MIME_TYPES = new Map([
+  ['.mp4', new Set(['audio/mp4', 'video/mp4'])],
+  ['.webm', new Set(['audio/webm', 'video/webm'])]
 ]);
 
 let musicMetadata;
@@ -241,7 +246,8 @@ async function readLocalMetadata(post, localPath, stat) {
 async function normaliseLocalAudio(post, fileValue, runtime) {
   const file = normaliseLocalFile(post, fileValue);
   const options = audioRuntime(runtime);
-  const type = AUDIO_MIME_TYPES.get(path.extname(file).toLowerCase());
+  const extension = path.extname(file).toLowerCase();
+  const type = AUDIO_MIME_TYPES.get(extension);
   if (!type) throw audioError(post, '`file` has an unsupported audio extension. Supported extensions: ' + Array.from(AUDIO_MIME_TYPES.keys()).join(', ') + '.');
   const capability = options.assetsEnabled ? options.assetCapability : null;
   if (options.assetsEnabled && !capability && typeof options.onMissingAssets === 'function') options.onMissingAssets();
@@ -257,7 +263,8 @@ async function normaliseLocalAudio(post, fileValue, runtime) {
       throw audioError(post, error.message.replace(/^Asset manifest error:\s*/, ''));
     }
     if (!entry) throw audioError(post, `asset manifest does not contain ${key}. Refresh or publish the asset manifest after adding the file.`);
-    if (entry.type !== type) throw audioError(post, `asset manifest MIME type for ${key} is ${entry.type}, expected ${type}.`);
+    const acceptedTypes = LEGACY_CONTAINER_MIME_TYPES.get(extension) || new Set([type]);
+    if (!acceptedTypes.has(entry.type)) throw audioError(post, `asset manifest MIME type for ${key} is ${entry.type}, expected ${Array.from(acceptedTypes).join(' or ')}.`);
     if (!entry.duration) throw audioError(post, `asset manifest does not contain an audio duration for ${key}. Re-publish the hydrated audio file.`);
     length = entry.size;
     duration = entry.duration;

@@ -92,8 +92,9 @@ music:
 默认播放器；因此一篇文章可以放置多首音乐。
 
 音源必须唯一选择 prefix 下的 `file` 或绝对 HTTPS `audio`。`file` 相对于
-`audio.media.prefix`，支持 MP3、M4A/M4B/MP4、AAC、OGG、Opus、WAV、FLAC、AIFF 和
-WebM；时长与 MIME 类型可由 `hexo-sil-assets publish` 写入清单。外链音频的时长会在浏览器取得元数据后显示。
+`audio.media.prefix`，支持 MP3、M4A/M4B、AAC、OGG、Opus、WAV、FLAC、AIFF 和
+WebA；同时兼容旧清单中的纯音频 MP4/WebM。新资产应分别使用 `.m4a` 和 `.weba`，将 `.mp4`、`.m4v`
+及 `.webm` 保留给视频。时长与 MIME 类型可由 `hexo-sil-assets publish` 写入清单。外链音频的时长会在浏览器取得元数据后显示。
 
 播放器标题依次使用：显式 `music.title` 或标签 `title`、文章标题、清单中的音频内嵌标题、文件名。
 外链音频没有内嵌标题读取，会最后回退到 URL 文件名。

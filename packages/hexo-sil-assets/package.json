@@ -1,6 +1,6 @@
 {
   "name": "hexo-sil-assets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Versioned asset manifests and R2 maintenance for Hexo",
   "main": "index.js",
   "exports": {

@@ -13,7 +13,7 @@ const {
   serialiseManifest,
   treeFromManifest
 } = require('..');
-const { diffManifest, lfsPointer, parseArguments, scanLocalAssets } = require('../bin/cli');
+const { diffManifest, lfsPointer, mimeType, parseArguments, scanLocalAssets } = require('../bin/cli');
 const { loadAssetsConfig, mappingForKey } = require('../lib/config');
 const { R2Client, requiredEnvironment } = require('../lib/r2-client');
 
@@ -101,4 +101,15 @@ test('CLI arguments and R2 configuration are cross-platform and credential-safe'
   assert.equal(client.url('files/a b.mp3'), 'https://account.r2.cloudflarestorage.com/assets/files/a%20b.mp3');
   assert.throws(() => requiredEnvironment({}), /R2_ACCOUNT_ID/);
   assert.throws(() => requiredEnvironment({ R2_ACCOUNT_ID: 'account', R2_ACCESS_KEY_ID: 'key', R2_SECRET_ACCESS_KEY: 'secret' }), /R2_BUCKET/);
+});
+
+test('publisher assigns browser-safe video, subtitle, and font MIME types', () => {
+  assert.equal(mimeType('movie.mp4'), 'video/mp4');
+  assert.equal(mimeType('movie.m4v'), 'video/mp4');
+  assert.equal(mimeType('movie.webm'), 'video/webm');
+  assert.equal(mimeType('sound.weba'), 'audio/webm');
+  assert.equal(mimeType('captions.ass'), 'text/x-ssa; charset=utf-8');
+  assert.equal(mimeType('captions.srt'), 'application/x-subrip; charset=utf-8');
+  assert.equal(mimeType('font.ttf'), 'font/ttf');
+  assert.equal(mimeType('font.otf'), 'font/otf');
 });

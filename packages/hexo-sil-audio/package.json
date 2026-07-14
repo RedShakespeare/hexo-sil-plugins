@@ -1,6 +1,6 @@
 {
   "name": "hexo-sil-audio",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Accessible audio players and manifest-aware metadata for Hexo",
   "main": "index.js",
   "exports": { ".": "./index.js", "./package.json": "./package.json" },
