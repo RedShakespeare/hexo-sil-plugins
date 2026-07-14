@@ -1,0 +1,19 @@
+{
+  "name": "hexo-sil-podcast-inside",
+  "version": "0.1.0",
+  "description": "Optional podcast list integration for hexo-theme-inside",
+  "main": "index.js",
+  "exports": { ".": "./index.js", "./patch": "./lib/patch.js", "./package.json": "./package.json" },
+  "bin": { "hexo-sil-podcast-inside-patch": "bin/postinstall.js" },
+  "files": ["bin/", "lib/", "index.js", "README.md", "LICENSE"],
+  "scripts": { "postinstall": "node bin/postinstall.js", "test": "node --test test", "prepublishOnly": "npm test" },
+  "repository": { "type": "git", "url": "git+https://github.com/RedShakespeare/hexo-sil-plugins.git", "directory": "packages/hexo-sil-podcast-inside" },
+  "homepage": "https://github.com/RedShakespeare/hexo-sil-plugins#readme",
+  "bugs": "https://github.com/RedShakespeare/hexo-sil-plugins/issues",
+  "keywords": ["hexo", "podcast", "inside", "theme"],
+  "author": "Silencess <silencess.m@gmail.com>",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "peerDependencies": { "hexo": ">=6.3.0 <8", "hexo-sil-podcast": "^0.1.0", "hexo-theme-inside": "2.7.0" },
+  "publishConfig": { "access": "public" }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "hexo-sil-archive",
+  "version": "0.1.0",
+  "description": "Searchable manifest or filesystem archives for Hexo",
+  "main": "index.js",
+  "exports": { ".": "./index.js", "./package.json": "./package.json" },
+  "files": ["lib/", "skins/", "index.js", "README.md", "LICENSE"],
+  "scripts": { "test": "node --test test", "prepublishOnly": "npm test" },
+  "repository": { "type": "git", "url": "git+https://github.com/RedShakespeare/hexo-sil-plugins.git", "directory": "packages/hexo-sil-archive" },
+  "homepage": "https://github.com/RedShakespeare/hexo-sil-plugins#readme",
+  "bugs": "https://github.com/RedShakespeare/hexo-sil-plugins/issues",
+  "keywords": ["hexo", "archive", "downloads", "search"],
+  "author": "Silencess <silencess.m@gmail.com>",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "peerDependencies": { "hexo": ">=6.3.0 <8", "hexo-sil-assets": "^0.1.0" },
+  "peerDependenciesMeta": { "hexo-sil-assets": { "optional": true } },
+  "publishConfig": { "access": "public" }
+}

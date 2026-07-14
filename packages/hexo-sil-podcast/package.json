@@ -1,0 +1,21 @@
+{
+  "name": "hexo-sil-podcast",
+  "version": "0.1.0",
+  "description": "Podcast players, RSS generation, and feed verification for Hexo",
+  "main": "index.js",
+  "exports": { ".": "./index.js", "./rss": "./lib/rss.js", "./verify": "./lib/verify.js", "./package.json": "./package.json" },
+  "bin": { "hexo-sil-podcast-verify": "bin/verify.js" },
+  "files": ["bin/", "lib/", "index.js", "README.md", "LICENSE"],
+  "scripts": { "test": "node --test test", "prepublishOnly": "npm test" },
+  "repository": { "type": "git", "url": "git+https://github.com/RedShakespeare/hexo-sil-plugins.git", "directory": "packages/hexo-sil-podcast" },
+  "homepage": "https://github.com/RedShakespeare/hexo-sil-plugins#readme",
+  "bugs": "https://github.com/RedShakespeare/hexo-sil-plugins/issues",
+  "keywords": ["hexo", "podcast", "rss", "itunes"],
+  "author": "Silencess <silencess.m@gmail.com>",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "peerDependencies": { "hexo": ">=6.3.0 <8", "hexo-sil-audio": "^0.1.0", "hexo-sil-assets": "^0.1.0" },
+  "peerDependenciesMeta": { "hexo-sil-assets": { "optional": true } },
+  "dependencies": { "sax": "^1.2.4" },
+  "publishConfig": { "access": "public" }
+}

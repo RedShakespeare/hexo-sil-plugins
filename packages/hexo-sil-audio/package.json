@@ -1,0 +1,20 @@
+{
+  "name": "hexo-sil-audio",
+  "version": "0.1.0",
+  "description": "Accessible audio players and manifest-aware metadata for Hexo",
+  "main": "index.js",
+  "exports": { ".": "./index.js", "./package.json": "./package.json" },
+  "files": ["skins/", "index.js", "README.md", "LICENSE"],
+  "scripts": { "test": "node --test test", "prepublishOnly": "npm test" },
+  "repository": { "type": "git", "url": "git+https://github.com/RedShakespeare/hexo-sil-plugins.git", "directory": "packages/hexo-sil-audio" },
+  "homepage": "https://github.com/RedShakespeare/hexo-sil-plugins#readme",
+  "bugs": "https://github.com/RedShakespeare/hexo-sil-plugins/issues",
+  "keywords": ["hexo", "audio", "music", "player"],
+  "author": "Silencess <silencess.m@gmail.com>",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "peerDependencies": { "hexo": ">=6.3.0 <8", "hexo-sil-assets": "^0.1.0" },
+  "peerDependenciesMeta": { "hexo-sil-assets": { "optional": true } },
+  "dependencies": { "music-metadata": "^11.13.0" },
+  "publishConfig": { "access": "public" }
+}

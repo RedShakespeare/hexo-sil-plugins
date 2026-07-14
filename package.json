@@ -1,0 +1,23 @@
+{
+  "name": "hexo-sil-plugins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Publishable Hexo plugins extracted from Ephesus",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "check": "npm run test && npm run pack:dry-run",
+    "pack:dry-run": "node tools/pack-audit.js",
+    "test:integration": "node tools/integration-test.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "hexo": "^6.3.0",
+    "hexo-theme-inside": "2.7.0"
+  },
+  "license": "MIT"
+}
