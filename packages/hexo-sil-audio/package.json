@@ -1,6 +1,6 @@
 {
   "name": "hexo-sil-audio",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Accessible audio players and manifest-aware metadata for Hexo",
   "main": "index.js",
   "exports": { ".": "./index.js", "./package.json": "./package.json" },
@@ -16,5 +16,6 @@
   "peerDependencies": { "hexo": ">=6.3.0 <8", "hexo-sil-assets": "^0.1.0" },
   "peerDependenciesMeta": { "hexo-sil-assets": { "optional": true } },
   "dependencies": { "music-metadata": "^11.13.0" },
+  "devDependencies": { "jsdom": "29.1.1" },
   "publishConfig": { "access": "public" }
 }

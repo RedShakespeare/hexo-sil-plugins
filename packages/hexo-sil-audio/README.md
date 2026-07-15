@@ -57,14 +57,18 @@ audio:
 以下类名和状态属性是自定义皮肤可依赖的接口：
 
 - 根节点与区块：`.sil-audio-player`、`__header`、`__status`、`__meta`、`__audio`、`__controls`、`__footer`。
-- 控件：`__play-button`、`__volume-button`、`__download`、`__progress`、`__current`、`__duration`。
-- 状态属性：`data-sil-audio-enhanced`、`data-sil-audio-playing`、`data-sil-audio-muted`、
+- 控件：`__play-button`、`__volume-button`、`__repeat-button`、`__download`、`__progress`、`__current`、`__duration`。
+- 状态属性：`data-sil-audio-enhanced`、`data-sil-audio-playing`、`data-sil-audio-ended`、
+  `data-sil-audio-loop`、`data-sil-audio-muted`、
   `data-sil-audio-loading`、`data-sil-audio-error`、`data-sil-audio-title-overflow` 和
   `data-sil-audio-theme`。
+- 进度条变量：`--sil-audio-range-fill` 是已播放百分比，`--sil-audio-buffered` 是缓冲颜色，
+  `--sil-audio-range-buffered` 是运行时根据全部 `audio.buffered` 区间生成的分段渐变。
 
-Ephesus 皮肤使用这些状态实现加载提示、播放/静音图标切换、标题滚动和明暗模式。当前布局使用统一
-相对坐标：底栏五个元素的中心依次位于播放器卡片外边界的 10%、30%、50%、70% 与 90%；进度条从
-10% 延至 90%，端点与两端时间中心对齐。
+Ephesus 皮肤使用这些状态实现加载提示、播放/重播、单次/循环、静音图标切换、标题滚动和明暗模式。
+底栏依次排列当前时间、音量、播放、循环、下载和总时长，六个中心点等距分布，因此两个时间中心之间
+被四个按钮分成五等份；进度条端点继续与两端时间中心对齐。已播放部分使用主题原色，已缓冲但尚未
+播放的全部区间使用稍淡的主题色，未缓冲部分使用轨道色。
 
 ## 在文章中插入音乐
 
